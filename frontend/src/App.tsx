@@ -20,7 +20,8 @@ export default function App() {
 
     setMessages((m) => [...m, { sender: "user", text: userText }]);
 
-    const res = await fetch("http://localhost:3001/chat/message", {
+    const res = await fetch("https://spur-ai-chat-backend-k09u.onrender.com/chat/message",
+ {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: userText, sessionId }),
