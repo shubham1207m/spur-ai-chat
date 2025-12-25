@@ -4,13 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateReply = generateReply;
-const openai_1 = __importDefault(require("openai"));
-const openai = new openai_1.default({
-    apiKey: process.env.OPENAI_API_KEY,
+const groq_sdk_1 = __importDefault(require("groq-sdk"));
+const groq = new groq_sdk_1.default({
+    apiKey: process.env.GROQ_API_KEY,
 });
 async function generateReply(message) {
-    const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+    const completion = await groq.chat.completions.create({
+        model: "llama3-8b-8192",
         messages: [{ role: "user", content: message }],
     });
     return completion.choices[0].message.content || "No response.";
