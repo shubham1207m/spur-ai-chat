@@ -8,6 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const zod_1 = require("zod");
 const db_1 = require("./db");
+const llm_1 = require("./llm");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -33,7 +34,7 @@ app.post("/chat/message", async (req, res) => {
             },
         });
         // Dummy reply for now
-        const reply = "Thanks! Your message has been received.";
+        const reply = await (0, llm_1.generateReply)(message);
         await db_1.prisma.message.create({
             data: {
                 text: reply,

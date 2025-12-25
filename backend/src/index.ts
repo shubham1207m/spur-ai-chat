@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { z } from "zod";
 import { prisma } from "./db";
+import { generateReply } from "./llm";
+
 
 dotenv.config();
 
@@ -36,7 +38,9 @@ app.post("/chat/message", async (req, res) => {
     });
 
     // Dummy reply for now
-    const reply = "Thanks! Your message has been received.";
+    const reply = await generateReply(message);
+
+
 
     await prisma.message.create({
       data: {
