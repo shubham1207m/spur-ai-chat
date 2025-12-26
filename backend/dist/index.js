@@ -46,7 +46,9 @@ app.post("/chat/message", async (req, res) => {
     }
     catch (err) {
         console.error(err);
-        res.status(400).json({ error: "Invalid request" });
+        res.status(500).json({
+            error: err?.message || String(err),
+        });
     }
 });
 app.get("/health", (_, res) => {

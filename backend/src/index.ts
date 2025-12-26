@@ -51,10 +51,13 @@ app.post("/chat/message", async (req, res) => {
     });
 
     res.json({ reply, sessionId: conversation.id });
-  } catch (err) {
-    console.error(err);
-    res.status(400).json({ error: "Invalid request" });
-  }
+  } catch (err: any) {
+  console.error(err);
+  res.status(500).json({
+    error: err?.message || String(err),
+  });
+}
+
 });
 
 app.get("/health", (_, res) => {
