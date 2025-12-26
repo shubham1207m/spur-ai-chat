@@ -20,12 +20,14 @@ export default function App() {
 
     setMessages((m) => [...m, { sender: "user", text: userText }]);
 
-    const res = await fetch("https://spur-ai-chat-backend-k09u.onrender.com/chat/message",
- {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userText, sessionId }),
-    });
+    const res = await fetch(
+      "https://spur-ai-chat-backend-k09u.onrender.com/chat/message",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userText, sessionId }),
+      }
+    );
 
     const data = await res.json();
 
@@ -38,48 +40,24 @@ export default function App() {
   }, [messages]);
 
   return (
-    <div style={{ maxWidth: 600, margin: "40px auto", fontFamily: "sans-serif" }}>
-      <h2>AI Support Chat</h2>
+    <div className="chat-container">
+      <div className="chat-header">AI Support Chat</div>
 
-      <div
-        style={{
-          border: "1px solid #ddd",
-          padding: 10,
-          height: 400,
-          overflowY: "auto",
-          borderRadius: 6,
-        }}
-      >
+      <div className="chat-window">
         {messages.map((m, i) => (
-          <div
-            key={i}
-            style={{
-              textAlign: m.sender === "user" ? "right" : "left",
-              margin: "6px 0",
-            }}
-          >
-            <span
-              style={{
-                display: "inline-block",
-                padding: "6px 10px",
-                borderRadius: 8,
-                background: m.sender === "user" ? "#DCF8C6" : "#EEE",
-              }}
-            >
-              {m.text}
-            </span>
+          <div key={i} className={`message ${m.sender}`}>
+            {m.text}
           </div>
         ))}
         <div ref={endRef} />
       </div>
 
-      <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+      <div className="input-bar">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           placeholder="Type your message..."
-          style={{ flex: 1, padding: 8 }}
         />
         <button onClick={sendMessage}>Send</button>
       </div>
