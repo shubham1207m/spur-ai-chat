@@ -10,7 +10,7 @@ const groq = new groq_sdk_1.default({
 });
 async function generateReply(message) {
     const completion = await groq.chat.completions.create({
-        model: "llama3-8b-8192",
+        model: "llama-3.1-8b-instant",
         messages: [{ role: "user", content: message }],
     });
     return completion.choices[0].message.content || "No response.";
